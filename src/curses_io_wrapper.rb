@@ -18,9 +18,17 @@ class CursesIOWrapper < IOWrapper
   end
 
   def output(*args, &block)
-    @window.setpos(1,1)
-    @window.addstr(args[0])
+    10.times do |y|
+      @window.setpos(y, 0)
+      @window.addstr(' ' * 27)
+    end
+
+    @pos = args[0]
+    @window.setpos(1 + @pos[1], 1 + @pos[0])
+    @window.addch(?*)
     @window.box(?|, ?-)
+    @window.setpos(0,0)
+    @window.addstr("(#{@pos[0]}, #{@pos[1]})")
     @window.refresh
   end
 
