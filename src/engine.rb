@@ -3,10 +3,17 @@ require 'curses'
 
 class Engine
   include Singleton
+  attr_reader :dispatcher
 
   def initialize
     @started = false
-    @wanderer = Wanderer.new(11,4);
+    @dispatcher = Dispatcher.new
+
+    @wanderer = Wanderer.new(11,4)
+    dispatcher.subscribe(@wanderer, :left, :left)
+    dispatcher.subscribe(@wanderer, :right, :right)
+    dispatcher.subscribe(@wanderer, :up, :up)
+    dispatcher.subscribe(@wanderer, :down, :down)
   end
 
   def configure hash
@@ -30,22 +37,11 @@ class Engine
   end
 
   def read_input
-    case component[:input].input
-    when ?q then @input = :quit
-    when ?a then @input = :left
-    when ?d then @input = :right
-    when ?w then @input = :up
-    when ?s then @input = :down
-    end
+    @input = component[:input].input
   end
 
   def update
-    case @input
-    when :left then @wanderer.left()
-    when :right then @wanderer.right()
-    when :up then @wanderer.up()
-    when :down then @wanderer.down()
-    end
+    dispatcher.dispatch(@input)
     @response = @wanderer.pos
   end
 

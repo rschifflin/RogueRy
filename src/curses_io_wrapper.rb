@@ -14,7 +14,13 @@ class CursesIOWrapper < IOWrapper
   end
 
   def input
-    getch
+    case getch
+    when ?q then :quit
+    when ?a then :left
+    when ?d then :right
+    when ?w then :up
+    when ?s then :down
+    end
   end
 
   def output(*args, &block)
