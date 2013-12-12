@@ -2,10 +2,9 @@ require 'spec_helper'
 
 describe Engine do
   subject(:engine) { Engine.instance }
-  let(:mock_draw) { IOWrapper.new }
-  let(:mock_input) { IOWrapper.new }
+  let(:view_model) { double('CursesViewModel') }
   let(:mock_component) do
-    { input: mock_input, draw: mock_draw }
+    { view_model: view_model }
   end
 
   before do
@@ -14,27 +13,28 @@ describe Engine do
   end 
 
   it "is a singleton" do 
-      another_engine = Engine.instance 
-      expect(engine).to eq(another_engine)
+    another_engine = Engine.instance 
+    expect(engine).to eq(another_engine)
+  end
+
+  context "on input" do
+    let(:input) { :some_input }
+    it "outputs the corresponding ui to the view model" do
+      view_model.should_receive(:construct)
+      engine.handle(input);
+    end
   end
 
   context "before starting" do
     describe "#start" do
       it "sets up the input component" do
-        mock_input.should_receive(:start)
-        engine.start
       end
       it "sets up the draw component" do
-        mock_draw.should_receive(:start)
-        engine.start
       end
     end
 
     describe "#stop" do
       it "ignores the command" do
-        mock_input.should_not_receive(:stop)
-        mock_draw.should_not_receive(:stop)
-        engine.stop
       end
     end
   end
@@ -42,24 +42,9 @@ describe Engine do
   context "after having started" do
     before { subject.start }
     describe "#start" do
-      let(:another_mock_io) { IOWrapper.new }
-      it "stops the old io wrapper" do
-        mock_io.should_receive(:stop)
-        subject.start(another_mock_io)
-      end
-
-      it "starts the new io wrapper" do
-        another_mock_io.should_receive(:start)
-        subject.start(another_mock_io)
-      end
     end
-
     describe "#stop" do
-      it "tells the io wrappers to stop" do
-        mock_input.should_receive(:stop)
-        mock_draw.should_receive(:stop)
-        engine.stop
-      end
     end
+
   end
 end
