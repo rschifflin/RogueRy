@@ -1,0 +1,2 @@
+load 'lib/string.rb'
+Dir[File.dirname(__FILE__) + '/lib/tasks/*.rake'].each { |f| load f }

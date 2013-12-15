@@ -1,12 +1,14 @@
 require 'spec_helper'
 
 describe CursesController do
-  subject(:curses_controller) { CursesController.new(view_model, engine) } 
-  let(:view_model) { double("ViewModel") }
+  subject(:curses_controller) { CursesController.new() } 
+  let(:renderer) { double("Renderer") }
   let(:engine) { double("Engine") }
   before do 
-    view_model.stub(:can_handle?)
-    view_model.stub(:handle)
+    curses_controller.add_engine engine
+    curses_controller.add_renderer renderer
+    renderer.stub(:can_handle?)
+    renderer.stub(:handle)
     engine.stub(:can_handle?)
     engine.stub(:handle)
   end
@@ -17,9 +19,9 @@ describe CursesController do
     end
 
     describe("With data the view model can handle") do 
-      before { view_model.stub(:can_handle?) { true } } 
+      before { renderer.stub(:can_handle?) { true } } 
       it "dispatches the message to the view model" do
-        view_model.should_receive(:handle)
+        renderer.should_receive(:handle)
         curses_controller.input("something") 
       end
       it "doesn't dispatch the message to the engine" do
@@ -29,9 +31,9 @@ describe CursesController do
     end
 
     describe("With data the view model can't handle") do 
-      before { view_model.stub(:can_handle?) { false } } 
+      before { renderer.stub(:can_handle?) { false } } 
       it "doesn't dispatch the message to the view model" do
-        view_model.should_not_receive(:handle)
+        renderer.should_not_receive(:handle)
         curses_controller.input("something") 
       end
       it "dispatches the message to the engine" do
