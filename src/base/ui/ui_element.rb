@@ -4,10 +4,7 @@ class UIElement
     @x, @y, @w, @h, @parent = 0,0,0,0, parent
     @children = []
     @parent.children << self if @parent 
-  end
-
-  def config options
-    @options.each_key { |k| @options[k] = options[k] if options[k] }
+    @options = {}
   end
 
   def move(x,y)
@@ -20,6 +17,14 @@ class UIElement
     @w = w
     @h = h
     self
+  end
+
+  def [] option
+    @options[option]
+  end
+
+  def []= option, setting
+    @options[option] = setting
   end
 
 end

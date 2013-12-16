@@ -1,5 +1,5 @@
 class CursesUIElement
-  attr_reader :x, :y
+  attr_reader :x, :y, :w, :h, :parent_w, :parent_h
   
   def initialize ui_element
     update_from ui_element

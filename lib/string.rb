@@ -5,7 +5,7 @@ class String
     tail_range = ((other_str.length + index)...self.length)
     head = self.slice(head_range) || ""
     tail = self.slice(tail_range) || ""
-    (head + tail).insert(index, other_str)
+    (head + tail).insert(index, other_str).slice(0, self.length)
   end
 
   def to_camel

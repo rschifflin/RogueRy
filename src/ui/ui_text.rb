@@ -3,10 +3,10 @@ class UIText < UIElement
   def initialize(parent=nil, string="")
     super(parent)
     @text = string 
-    @options = { :overflow => :hide }
+    self[:overflow] = :hidden 
   end 
+
   def text= string
     @text = string.to_s
   end
-
 end

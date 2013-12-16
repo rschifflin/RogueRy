@@ -90,11 +90,11 @@ describe String do
       let(:string_a) { "String A" }
       let(:string_b) { "String B plus some" }
       context "Using no index" do
-        it { expect(string_a.merge string_b).to eq string_b }
+        it { expect(string_a.merge string_b).to eq "String B" }
       end
 
       context "With index 5" do
-        it { expect(string_a.merge string_b, 5).to eq "StrinString B plus some" }
+        it { expect(string_a.merge string_b, 5).to eq "StrinStr" }
       end
 
       context "With index 1293" do
@@ -112,7 +112,7 @@ describe String do
       end
 
       context "With index 4" do
-        it { expect(string_a.merge string_b, 4).to eq "abcd123456" }
+        it { expect(string_a.merge string_b, 4).to eq "abcd12" }
       end
 
       context "With index 123" do
@@ -134,7 +134,7 @@ describe String do
       end
 
       context "With using string_a's length as index" do
-        it { expect(string_a.merge string_b, string_a.length).to eq "String A plus someString B" }
+        it { expect(string_a.merge string_b, string_a.length).to eq "String A plus some" }
       end
 
       context "With index 555" do
