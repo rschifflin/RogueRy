@@ -1,9 +1,7 @@
 class UIElement
-  attr_reader :x, :y, :h, :w, :parent, :childen, :options
-  def initialize *args, &block
-    @x, @y, @w, @h, @parent = 0,0,0,0,nil
-    @x, @y, @w, @h, @parent = *args
-
+  attr_reader :x, :y, :h, :w, :parent, :children, :options
+  def initialize(parent = nil) 
+    @x, @y, @w, @h, @parent = 0,0,0,0, parent
     @children = []
     @parent.children << self if @parent 
   end
@@ -15,5 +13,13 @@ class UIElement
   def move(x,y)
     @x = x
     @y = y
+    self
   end
+
+  def resize(w, h)
+    @w = w
+    @h = h
+    self
+  end
+
 end

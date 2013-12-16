@@ -1,4 +1,5 @@
-class CursesUIText
+class CursesUIText < CursesUIElement
+  attr_reader :text
   def update_from ui_text
     super
     @x = ui_text.x

@@ -11,7 +11,6 @@ class Wanderer
 
   def view
     @view.move(x,y)
-    @view
   end
 
   def pos

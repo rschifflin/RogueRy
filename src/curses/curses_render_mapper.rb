@@ -1,6 +1,9 @@
 class CursesRenderMapper
   def initialize
-    @map = { UICharacter => CursesUICharacter }
+    @map = { 
+      UICharacter => CursesUICharacter,
+      UIText => CursesUIText }
+
   end
   def [] key
     @map[key]
