@@ -1,5 +1,12 @@
+require "interface/curses/renderer/curses_render_mapper"
+require "interface/base/renderer"
+
 class CursesRenderer < Renderer
   attr_reader :io_wrapper, :output
+  def can_handle? input
+    false
+  end
+
   def initialize
     @render_mapper = CursesRenderMapper.new
   end
@@ -13,7 +20,7 @@ class CursesRenderer < Renderer
   end
 
   def update ui
-    curses_ui_class = @render_mapper[ui.class]
+    curses_ui_class = @render_mapper[ui.class.to_s]
     curses_ui = curses_ui_class.new(ui)
     @output = curses_ui.render @output
   end

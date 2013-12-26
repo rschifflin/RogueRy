@@ -1,3 +1,4 @@
+require "engine/views/ui_element"
 class UICharacter < UIElement
   attr_reader :char
   def initialize char

@@ -1,9 +1,9 @@
 namespace :ui do
   namespace :curses do
-    SRC_UI_DIR = "src/ui"
-    SPEC_SRC_UI_DIR = "spec/src/ui"
-    SRC_CURSES_DIR = "src/curses/ui"
-    SPEC_SRC_CURSES_UI_DIR= "spec/src/curses/ui"
+    SRC_UI_DIR = "src/engine/views"
+    SPEC_SRC_UI_DIR = "spec/src/engine/views"
+    SRC_CURSES_DIR = "src/interface/curses/ui"
+    SPEC_SRC_CURSES_UI_DIR= "spec/src/interface/curses/ui"
 
     directory SRC_UI_DIR
     directory SPEC_SRC_UI_DIR

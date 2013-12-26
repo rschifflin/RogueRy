@@ -8,13 +8,6 @@ describe CursesRenderer do
     curses_renderer.add_io_wrapper curses_io_wrapper
   end
 
-  describe "#can_handle?" do
-    describe "with input it can't handle" do
-      it "returns false" do
-        expect(curses_renderer.can_handle?(nil)).to be_false
-      end
-    end 
-  end
 =begin
   describe "Constructing the view model" do
     describe "With input constraints of 24x80" do

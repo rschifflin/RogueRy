@@ -1,3 +1,4 @@
+require "engine/views/ui_character"
 class Wanderer
   attr_accessor :x, :y
   attr_reader :view

@@ -1,5 +1,15 @@
 require File.dirname(__FILE__) + '/config/boot.rb'
 
+#Load our engine
+require 'engine/engine'
+
+#Load our interface
+require 'interface/curses/controller/curses_controller'
+require 'interface/curses/renderer/curses_renderer'
+
+#Load our dependencies - Curses
+require 'wrappers/curses_io_wrapper'
+
 #For curses
 io_wrapper = CursesIOWrapper.new
 controller = CursesController.new

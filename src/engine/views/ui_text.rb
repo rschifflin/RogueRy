@@ -1,3 +1,4 @@
+require "engine/views/ui_element"
 class UIText < UIElement
   attr_reader :text
   def initialize(parent=nil, string="")

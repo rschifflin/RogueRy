@@ -1,5 +1,5 @@
 require 'curses'
-require 'io_wrapper'
+require 'wrappers/io_wrapper'
 include Curses
 
 class CursesIOWrapper < IOWrapper

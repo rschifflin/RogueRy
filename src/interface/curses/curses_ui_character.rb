@@ -1,3 +1,4 @@
+require "interface/curses/curses_ui_element"
 class CursesUICharacter < CursesUIElement
   attr_reader :char
   def update_from ui_character
