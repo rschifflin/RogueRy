@@ -5,6 +5,12 @@ class CursesUIElement
   def initialize ui_element
     update_from ui_element
   end
+  def renderable?
+    true
+  end
+  def controllable?
+    true
+  end
 
   def update_from ui_element
     @x = ui_element.x

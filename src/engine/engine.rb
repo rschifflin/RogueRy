@@ -4,10 +4,11 @@ require 'engine/models/wanderer'
 require 'engine/models/ui_tester'
 
 class Engine
-  include Singleton
-  attr_reader :dispatcher, :renderer, :wanderer, :ui_tester
+  attr_reader :dispatcher, :interface_wrapper, :wanderer, :ui_tester
 
-  def initialize
+  def initialize opts={}
+    opts = defaults.merge opts
+    @interface_wrapper = opts[:interface_wrapper]
     @dispatcher = Dispatcher.new
     @ui_tester = UITester.new
     @wanderer = Wanderer.new(11,4)
@@ -17,8 +18,8 @@ class Engine
     dispatcher.subscribe(wanderer, :down, :down)
   end
 
-  def add_renderer renderer
-    @renderer = renderer
+  def defaults
+    {}
   end
 
   def handle input
@@ -33,9 +34,7 @@ class Engine
       dispatcher.dispatch(:right)
     end
 
-    renderer.clear
-    renderer.update(ui_tester.view)
-    renderer.render
+    interface_wrapper.update(wanderer.view)
   end
 
 end

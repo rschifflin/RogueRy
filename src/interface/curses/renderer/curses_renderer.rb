@@ -2,30 +2,32 @@ require "interface/curses/renderer/curses_render_mapper"
 require "interface/base/renderer"
 
 class CursesRenderer < Renderer
-  attr_reader :io_wrapper, :output
+  attr_reader :io_wrapper, :view_keeper, :output
   def can_handle? input
     false
   end
 
-  def initialize
-    @render_mapper = CursesRenderMapper.new
+  def initialize opts={}
+    opts = defaults.merge opts
+    @io_wrapper = opts[:io_wrapper]
+    @view_keeper = opts[:view_keeper]
   end
 
-  def add_io_wrapper io_wrapper
-    @io_wrapper = io_wrapper
+  def defaults
+    {}
   end
 
   def clear
-    @output = [].tap { |ary| @io_wrapper.lines.times { ary << " " * @io_wrapper.cols } }
+    @output = [].tap { |ary| io_wrapper.lines.times { ary << " " * io_wrapper.cols } }
   end
 
-  def update ui
-    curses_ui_class = @render_mapper[ui.class.to_s]
-    curses_ui = curses_ui_class.new(ui)
-    @output = curses_ui.render @output
+  def update 
+    @output = view_keeper.renderables.first.render(output)
   end
 
   def render
-    io_wrapper.output(@output);
+    clear
+    update
+    io_wrapper.output(output);
   end
 end

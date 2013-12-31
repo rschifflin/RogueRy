@@ -3,6 +3,16 @@ require 'wrappers/io_wrapper'
 include Curses
 
 class CursesIOWrapper < IOWrapper
+
+  def configure opts={}
+    opts = defaults.merge opts
+    @controller = opts[:controller]
+  end
+
+  def defaults
+    {}
+  end
+
   def run &block
     start
     yield
@@ -21,7 +31,10 @@ class CursesIOWrapper < IOWrapper
   end
 
   def input
-    return getch
+    char = getch 
+    return false if char == ?q
+
+    controller.input char
   end
 
   def output(lines)
