@@ -1,32 +1,22 @@
 class CursesController 
+  attr_reader :renderer, :view_keeper, :interface_wrapper
   def initialize opts={}
     opts = defaults.merge opts
     @renderer = opts[:renderer]
-    @engine = opts[:interface_wrapper]
-    @io_wrapper = opts[:io_wrapper]
+    @view_keeper = opts[:view_keeper]
+    @interface_wrapper = opts[:interface_wrapper]
   end
 
   def defaults
     {
       renderer: nil,
-      interface_wrapper: nil,
-      io_wrapper: nil
+      view_keeper: nil,
+      interface_wrapper: nil
     }
   end
 
   def input input
-    renderer.can_handle?(input) ? renderer.handle(input) : engine.handle(input)
-  end
-
-  def io_wrapper
-    @io_wrapper || raise("No IO wrapper provided")
-  end
-
-  def engine
-    @engine || raise("No engine provided")
-  end
-
-  def renderer
-    @renderer || raise("No renderer provided")
+    translated_input = view_keeper.handle(input)
+    translated_input == :Cosmetic ? renderer.render : interface_wrapper.handle(translated_input)
   end
 end

@@ -12,7 +12,7 @@ class CursesSyncer
   end
 
   def sync views
-     views = [views]
+    views = [views]
     view_keeper.views = views.map do |ui|
       @render_mapper[ui.class.to_s].new(ui)
     end
