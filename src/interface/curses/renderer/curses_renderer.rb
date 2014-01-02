@@ -18,16 +18,21 @@ class CursesRenderer < Renderer
   end
 
   def clear
-    @output = [].tap { |ary| io_wrapper.lines.times { ary << " " * io_wrapper.cols } }
+    @output = empty_screen
+  end
+
+  def empty_screen
+    [].tap { |ary| io_wrapper.lines.times { ary << " " * io_wrapper.cols } }
   end
 
   def update 
-    @output = view_keeper.renderables.first.render(output)
+    composed_output = view_keeper.renderables.inject(empty_screen) { |out, r| r.render(out) }
+    @output = composed_output if composed_output
   end
 
   def render
     clear
     update
-    io_wrapper.output(output);
+    io_wrapper.output(output)
   end
 end

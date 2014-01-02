@@ -14,24 +14,32 @@ class Wanderer
     @view.move(x,y)
   end
 
+  def update_view
+    @view.move(x,y)
+  end
+
   def pos
     [x, y]
   end
 
   def left
     self.x -= 1
+    update_view
   end
 
   def right
     self.x += 1
+    update_view
   end
 
   def up
     self.y -=1
+    update_view
   end
 
   def down
     self.y += 1
+    update_view
   end
 
 end

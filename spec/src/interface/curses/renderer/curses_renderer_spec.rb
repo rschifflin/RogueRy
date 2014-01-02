@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 describe CursesRenderer do
-  subject(:curses_renderer) { CursesRenderer.new }
+  subject(:curses_renderer) { CursesRenderer.new(view_keeper: curses_view_keeper, io_wrapper: curses_io_wrapper) }
   let(:curses_io_wrapper) { double("CursesIOWrapper") }
+  let(:curses_view_keeper) { double("CursesViewKeeper") }
   before do 
     curses_io_wrapper.stub(:output)
-    curses_renderer.add_io_wrapper curses_io_wrapper
+    curses_view_keeper.stub(:renderables) { [] }
   end
 
-=begin
   describe "Constructing the view model" do
     describe "With input constraints of 24x80" do
       before do
@@ -16,24 +16,11 @@ describe CursesRenderer do
         curses_io_wrapper.stub(:cols) { 80 }
       end
 
-      describe "Using a UIWanderer ui element as input" do
-        let(:ui_element) { double(UIElement) }
-        before do 
-          ui_element.stub(:pos_y) { 6 }
-          ui_element.stub(:pos_x) { 10 }
-          ui_element.stub(:char) { ?@ }
-          curses_renderer.clear
-          curses_renderer.update(ui_element) 
-        end
-
-        it "outputs 24 lines of width 80" do
-          lines = [].tap { |ary| 24.times { ary << " " * 80 } }
-          lines[6][10] = ?@
-          curses_io_wrapper.should_receive(:output).with(lines);
-          curses_renderer.render
-        end
+      it "outputs 24 lines of width 80" do
+        lines = [].tap { |ary| 24.times { ary << " " * 80 } }
+        curses_io_wrapper.should_receive(:output).with(lines);
+        curses_renderer.render
       end
     end
   end
-=end
 end

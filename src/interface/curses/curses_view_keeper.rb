@@ -1,4 +1,8 @@
 class CursesViewKeeper
+  def handle input
+    input
+  end
+
   def views
     @views || []
   end

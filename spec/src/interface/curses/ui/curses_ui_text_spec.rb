@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe CursesUIText do
   subject(:text) { CursesUIText.new(ui_text) }
-  let(:ui_text) { UIText.new(ui_parent, "") }
-  let(:ui_parent) { UIElement.new.resize(100,100) }
+  let(:ui_text) { UIText.new("") }
+  let(:ui_parent) { UIElement.new.resize(100,100).add_child(ui_text) }
   let(:output) { [" " * 80] }
   describe "#render" do
     context "with no text overflow" do
@@ -66,6 +66,5 @@ describe CursesUIText do
         end
       end
     end
-
   end
 end
