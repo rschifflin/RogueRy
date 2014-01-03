@@ -2,8 +2,8 @@ class UIElement
   include HeirarchyMember
 
   def move(x,y)
-    @x = x
-    @y = y
+    @pos.x = x
+    @pos.y = y
     self
   end
 
