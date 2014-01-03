@@ -2,14 +2,14 @@ class UIElement
   include HeirarchyMember
 
   def move(x,y)
-    @pos.x = x
-    @pos.y = y
+    pos_base.move(x,y)
+    calc_new_pos
     self
   end
 
   def resize(w, h)
-    @w = w
-    @h = h
+    pos_base.resize(w,h)
+    calc_new_pos
     self
   end
 
@@ -22,49 +22,80 @@ class UIElement
   end
 
   def x
-    @x ||= 0
+    pos_final.x 
   end
 
   def y
-    @y ||= 0
+    pos_final.y
   end
 
   def h
-    @h ||= 0
+    pos_final.h
   end
 
   def w
-    @w ||= 0
+    pos_final.w
   end
 
   def parent_x
-    @parent_x ||= 0
+    root? ? 0 : pos_parent.x
   end
+
   def parent_y
-    @parent_y ||= 0
+    root? ? 0 : pos_parent.y
   end
+
   def parent_w
-    @parent_w ||= 100
+    root? ? 0 : pos_parent.w
   end
+
   def parent_h
-    @parent_h ||= 100
+    root? ? 0 : pos_parent.h
   end
 
   def on_parent_added parent
-    @parent_x = parent.x
-    @parent_y = parent.y
-    @parent_w = parent.w
-    @parent_h = parent.h
+    self.pos_parent = Rect.new(x: parent.x, y: parent.y, w: parent.w, h: parent.h)
   end
 
   def on_parent_removed parent
-    @parent_x = 0
-    @parent_y = 0
-    @parent_w = 0
-    @parent_h = 0
+    self.pos_parent = nil
+  end
+
+  def root?
+    @pos_parent.nil?
   end
 
   def options
     @options ||= {}
   end
+
+private
+  def pos_base
+    @pos_base ||= Rect.new
+  end
+
+  def pos_parent
+    @pos_parent 
+  end
+
+  def pos_final
+    @pos_final ||= Rect.new
+  end
+
+  def calc_new_pos
+    unless root?
+      pos_final_unclipped = Rect.offset_of_rects(pos_base, pos_parent)
+      @pos_final = Rect.intersection_of_rects(pos_final_unclipped, pos_parent)
+    else
+      @pos_final = pos_base
+    end
+    children.each { |child| child.pos_parent = @pos_final }
+  end
+
+protected
+  def pos_parent= parent
+    @pos_parent = parent.nil? ? nil : Rect.new(x: parent.x, y: parent.y, w: parent.w, h: parent.h)
+    calc_new_pos
+  end
+
 end

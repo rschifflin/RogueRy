@@ -2,8 +2,7 @@ require "interface/curses/curses_ui_element"
 
 class CursesUIRect < CursesUIElement
   attr_reader :char
-  def update_from ui_rect
-    super
+  def on_update ui_rect
     @char = ui_rect.char
   end
 
@@ -11,7 +10,7 @@ class CursesUIRect < CursesUIElement
     output = output.dup
     h.times do |dy|
       w.times do |dx|
-        output[y+dy][x+dx] = char
+        output[y+dy][x+dx] = char if output[y+dy] && output[y+dy][x+dx]
       end
     end
     output

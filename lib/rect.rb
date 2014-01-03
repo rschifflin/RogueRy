@@ -46,12 +46,12 @@ class Rect
     length < 0 ? @h = 0 : @h = length
   end
 
-  def rect_within container
+  def self.intersection_of_rects rect, container
     #Determine the top left coord
-    x1 = [self.x, container.x].max
-    y1 = [self.y, container.y].max
-    x2 = [self.x + self.w, container.x + container.w].min
-    y2 = [self.y + self.h, container.y + container.h].min
+    x1 = [rect.x, container.x].max
+    y1 = [rect.y, container.y].max
+    x2 = [rect.x + rect.w, container.x + container.w].min
+    y2 = [rect.y + rect.h, container.y + container.h].min
     if 
       x1 >= container.x + container.w || 
       y1 >= container.y + container.h || 
@@ -61,14 +61,13 @@ class Rect
     end
 
     Rect.new(x: x1, y: y1, w: x2 - x1, h: y2 - y1)
-    #Return a rect such that only the overlapping area of the original rect within the container remains
   end
 
-  def rect_offset_from rect
-    Rect.new(x: rect.x + self.x, 
-             y: rect.y + self.y,
-             w: self.w,
-             h: self.h)
+  def self.offset_of_rects offset, base
+    Rect.new(x: base.x + offset.x, 
+             y: base.y + offset.y,
+             w: offset.w,
+             h: offset.h)
   end
 
   def defaults
