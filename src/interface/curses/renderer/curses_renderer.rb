@@ -1,11 +1,6 @@
-require "interface/curses/renderer/curses_render_mapper"
 require "interface/base/renderer"
-
 class CursesRenderer < Renderer
   attr_reader :io_wrapper, :view_keeper, :output
-  def can_handle? input
-    false
-  end
 
   def initialize opts={}
     opts = defaults.merge opts

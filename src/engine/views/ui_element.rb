@@ -1,5 +1,6 @@
 class UIElement
   include HeirarchyMember
+  include Identifiable
 
   def move(x,y)
     pos_base.move(x,y)

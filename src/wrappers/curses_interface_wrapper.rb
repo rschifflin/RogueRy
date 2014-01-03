@@ -5,6 +5,7 @@ class CursesInterfaceWrapper
     @engine = opts[:engine]
     @renderer = opts[:renderer]
     @syncer = opts[:syncer]
+    @converter = opts[:converter]
   end
 
   def defaults
@@ -16,7 +17,8 @@ class CursesInterfaceWrapper
   end
 
   def update views
-    syncer.sync(views)
+    converted_views = converter.convert(views)
+    syncer.sync(converted_views)
     renderer.render
   end
 

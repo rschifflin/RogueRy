@@ -4,7 +4,6 @@ class CursesSyncer
   def initialize opts={}
     opts = defaults.merge opts
     @view_keeper = opts[:view_keeper]
-    @render_mapper = CursesRenderMapper.new
   end
 
   def defaults
@@ -12,8 +11,16 @@ class CursesSyncer
   end
 
   def sync views
-    view_keeper.views = views.map do |ui|
-      @render_mapper[ui.class.to_s].new(ui)
+    id_view_map = map_views_by_id(view_keeper.views)
+    view_keeper.views = views.each do |view|
+      view.copy_cosmetic_state_from(id_view_map[view.id]) if id_view_map[view.id]
+    end
+  end
+
+private
+  def map_views_by_id(views)
+    {}.tap do |hsh|
+      views.each { |view| hsh[view.id] = view }
     end
   end
 end
