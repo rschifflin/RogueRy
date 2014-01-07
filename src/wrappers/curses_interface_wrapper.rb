@@ -1,5 +1,5 @@
 class CursesInterfaceWrapper
-  attr_reader :engine, :renderer, :syncer
+  attr_reader :engine, :renderer, :syncer, :converter
   def configure opts={}
     opts = defaults.merge opts
     @engine = opts[:engine]

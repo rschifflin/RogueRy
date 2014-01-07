@@ -4,4 +4,8 @@ class UIRect < UIElement
   def initialize char='#'
     @char = char
   end
+
+  def convert_using converter
+    converter.create_rect_from self
+  end
 end

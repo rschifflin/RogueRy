@@ -5,7 +5,7 @@ require 'engine/models/debug_text'
 require 'engine/models/debug_rect'
 
 class Engine
-  attr_reader :dispatcher, :interface_wrapper, :wanderer, :ui_tester
+  attr_reader :dispatcher, :interface_wrapper, :wanderer, :ui_tester, :ui_parent
 
   def initialize opts={}
     opts = defaults.merge opts
@@ -19,10 +19,10 @@ class Engine
     @rect2 = DebugRect.new(1,1,5,5,'#')
     @wanderer = Wanderer.new(11,4)
 
-    @ui_parent.add_child(@text1.view)
-    @ui_parent.add_child(@text2.view)
-    @ui_parent.add_child(@rect1.view)
-    @ui_parent.add_child(@wanderer.view)
+    ui_parent.add_child(@text1.view)
+    ui_parent.add_child(@text2.view)
+    ui_parent.add_child(@rect1.view)
+    ui_parent.add_child(@wanderer.view)
     @rect1.view.add_child(@rect2.view)
 
     dispatcher.subscribe(wanderer, :left, :left)

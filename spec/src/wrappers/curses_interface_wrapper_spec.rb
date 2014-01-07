@@ -2,14 +2,21 @@ require 'spec_helper'
 
 describe CursesInterfaceWrapper do
   subject(:wrapper) { CursesInterfaceWrapper.new }
+  let(:converter) { double("CursesConverter") }
   let(:syncer) { double("CursesSyncer") }
   let(:renderer) { double("CursesRenderer") }
-  before { wrapper.configure(syncer: syncer, renderer: renderer) }
+  before { wrapper.configure(converter: converter, syncer: syncer, renderer: renderer) }
 
   describe "#update" do
     before do
+      converter.stub(:convert)
       syncer.stub(:sync)
       renderer.stub(:render)
+    end
+
+    it "tells the converter to convert" do
+      converter.should_receive(:convert)
+      wrapper.update(nil)
     end
 
     it "tells the syncer to sync" do

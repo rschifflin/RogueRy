@@ -6,4 +6,8 @@ class UICharacter < UIElement
     @h = 1
     @char = char 
   end 
+
+  def convert_using converter 
+    converter.create_character_from self
+  end
 end

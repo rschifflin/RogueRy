@@ -2,6 +2,10 @@ class UIElement
   include HeirarchyMember
   include Identifiable
 
+  def convert_using converter
+    converter.create_element_from self
+  end
+
   def move(x,y)
     pos_base.move(x,y)
     calc_new_pos

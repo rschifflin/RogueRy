@@ -9,4 +9,8 @@ class UIText < UIElement
   def text= string
     @text = string.to_s
   end
+
+  def convert_using converter
+    converter.create_text_from self
+  end
 end

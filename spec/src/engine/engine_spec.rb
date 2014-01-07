@@ -11,7 +11,7 @@ describe Engine do
   context "on input" do
     let(:input) { :some_input }
     it "sends its views to the wrapper" do
-      wrapper.should_receive(:update).with(engine.wanderer.view)
+      wrapper.should_receive(:update).with(engine.ui_parent)
       engine.handle(input)
     end
   end
