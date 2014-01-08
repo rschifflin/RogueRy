@@ -17,7 +17,7 @@ module HeirarchyMember
 
   def remove_child child
     deleted = @children.reject!{ |member| member == child }
-    child.on_parent_removed(self) if deleted 
+    child.on_parent_removed(self) if deleted
   end
 
   def remove_all_children
@@ -44,6 +44,14 @@ module HeirarchyMember
     @order ||= :preorder
   end
 
+  def map_heirarchy &block
+    head = yield self
+    children.each do |child|
+      head.add_child(child.visit_in(:preorder).map_heirarchy(&block))
+    end
+    head
+  end
+
   def orderings
     %i(preorder, postorder)
   end
@@ -55,4 +63,5 @@ module HeirarchyMember
     end
     yield self if order == :postorder
   end
+
 end

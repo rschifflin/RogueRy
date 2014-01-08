@@ -2,6 +2,7 @@ require 'spec_helper'
 
 class HeirarchyMemberObject
   include HeirarchyMember
+  attr_reader :name
   def initialize(name)
     @name = name
   end
@@ -72,6 +73,21 @@ describe HeirarchyMember do
       obj_b.should_receive(:on_parent_removed).with(obj_a)
       obj_c.should_receive(:on_parent_removed).with(obj_a)
       obj_a.remove_all_children
+    end
+  end
+
+  describe "#map_heirarchy" do
+    before do 
+      obj_a.add_child(obj_b); obj_a.add_child(obj_c) 
+      obj_b.add_child(obj_d); obj_b.add_child(obj_e) 
+      obj_c.add_child(obj_f); obj_c.add_child(obj_g) 
+    end
+        
+    context "mapping the contents between two heirarchies" do
+      it "creates a new heirarchy, replacing the mapped values, but preserving the parent-child relations" do
+        new_obj = obj_a.map_heirarchy { |obj| HeirarchyMemberObject.new("new_#{obj.name}") }
+       expect(new_obj.map(&:name)).to eq %w| new_A new_B new_D new_E new_C new_F new_G |
+      end
     end
   end
 

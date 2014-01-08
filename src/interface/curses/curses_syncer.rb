@@ -11,10 +11,7 @@ class CursesSyncer
   end
 
   def sync views
-    id_view_map = map_views_by_id(view_keeper.views)
-    view_keeper.views = views.each do |view|
-      view.copy_cosmetic_state_from(id_view_map[view.id]) if id_view_map[view.id]
-    end
+    view_keeper.views = views  
   end
 
 private

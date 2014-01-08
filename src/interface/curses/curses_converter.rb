@@ -4,9 +4,7 @@ require "interface/curses/curses_ui_rect"
 
 class CursesConverter
   def convert views
-    views.map do |view|
-      view.convert_using(self)
-    end
+    views.map_heirarchy { |view| view.convert_using(self) }
   end
 
   def create_element_from(template)
@@ -14,7 +12,7 @@ class CursesConverter
   end
 
   def create_character_from(template)
-    CursesUICharacter.new(template)
+    CursesUICharacter.new(template).move(3,3).resize(1,1)
   end
 
   def create_rect_from(template)

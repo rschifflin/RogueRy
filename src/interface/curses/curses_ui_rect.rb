@@ -2,6 +2,7 @@ require "interface/curses/curses_ui_element"
 
 class CursesUIRect < CursesUIElement
   attr_reader :char
+
   def on_update ui_rect
     @char = ui_rect.char
   end
