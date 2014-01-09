@@ -1,6 +1,6 @@
 class CursesUIElement
   include HeirarchyMember
-  include Positionable
+  include Movable
   include Sizable
 
   attr_reader :id

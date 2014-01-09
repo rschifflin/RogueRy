@@ -1,12 +1,4 @@
-module Positionable
-  def position
-    @position ||= [0,0]
-  end
-
-  def offset
-    @offset ||= [0,0]
-  end
-
+module Movable
   def offset= offset
     @offset = offset
     on_offset
@@ -31,4 +23,15 @@ module Positionable
 
   def on_offset
   end
+
+private
+  def position
+    @position ||= [0,0]
+  end
+
+  def offset
+    @offset ||= [0,0]
+  end
+
+
 end
