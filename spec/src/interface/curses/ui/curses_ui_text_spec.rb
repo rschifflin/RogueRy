@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe CursesUIText do
+=begin We want to use this code to figure out proper formatting
   subject(:text) { CursesUIText.new(ui_text) }
   let(:ui_text) { UIText.new("") }
   let(:ui_parent) { UIElement.new.resize(100,100).add_child(ui_text) }
@@ -67,4 +68,6 @@ describe CursesUIText do
       end
     end
   end
+=end
 end
+

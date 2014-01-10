@@ -1,6 +1,7 @@
 require "interface/curses/curses_ui_character"
 require "interface/curses/curses_ui_text"
 require "interface/curses/curses_ui_rect"
+require "interface/curses/curses_ui_dialog"
 
 class CursesConverter
   def convert views
@@ -12,14 +13,18 @@ class CursesConverter
   end
 
   def create_character_from(template)
-    CursesUICharacter.new(template).move(3,3).resize(1,1)
+    CursesUICharacter.new(template)
   end
 
   def create_rect_from(template)
-    CursesUIRect.new(template).move(3,3)
+    CursesUIRect.new(template)
   end
 
   def create_text_from(template)
     CursesUIText.new(template)
+  end
+
+  def create_dialog_from(template)
+    CursesUIDialog.new(template).resize(20,20).move(17,13)
   end
 end

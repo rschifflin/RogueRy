@@ -2,7 +2,9 @@ class CursesUIElement
   include HeirarchyMember
   include Movable
   include Sizable
-  attr_reader :id
+  include Formattable
+
+  attr_reader :id, :tags
 
   def initialize ui_element
     update_from ui_element
@@ -10,6 +12,7 @@ class CursesUIElement
   end
 
   def update_from ui_element
+    @tags = ui_element.tags
     @id = ui_element.id
   end
 

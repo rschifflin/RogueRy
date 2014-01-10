@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/config/boot.rb'
 require 'engine/engine'
 require 'interface/curses/controller/curses_controller'
 require 'interface/curses/curses_converter'
+require 'interface/curses/curses_formatter'
 require 'interface/curses/curses_syncer'
 require 'interface/curses/renderer/curses_renderer'
 require 'interface/curses/curses_view_keeper'
@@ -31,6 +32,10 @@ def converter
   @converter ||= CursesConverter.new
 end
 
+def formatter
+  @formatter ||= CursesFormatter.new
+end
+
 def syncer
   @syncer ||= CursesSyncer.new(view_keeper: view_keeper)
 end
@@ -44,7 +49,7 @@ def controller
 end
 
 #Wire up the boundaries
-interface_wrapper.configure(converter: converter, syncer: syncer, renderer: renderer, engine: engine)
+interface_wrapper.configure(converter: converter, formatter: formatter, syncer: syncer, renderer: renderer, engine: engine)
 io_wrapper.configure(controller: controller)
 
 io_wrapper.run do

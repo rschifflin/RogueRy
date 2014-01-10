@@ -1,11 +1,12 @@
 class CursesInterfaceWrapper
-  attr_reader :engine, :renderer, :syncer, :converter
+  attr_reader :engine, :renderer, :syncer, :converter, :formatter
   def configure opts={}
     opts = defaults.merge opts
     @engine = opts[:engine]
     @renderer = opts[:renderer]
     @syncer = opts[:syncer]
     @converter = opts[:converter]
+    @formatter = opts[:formatter]
   end
 
   def defaults
@@ -18,7 +19,8 @@ class CursesInterfaceWrapper
 
   def update views
     converted_views = converter.convert(views)
-    syncer.sync(converted_views)
+    formatted_views = formatter.format(converted_views)
+    syncer.sync(formatted_views)
     renderer.render
   end
 
