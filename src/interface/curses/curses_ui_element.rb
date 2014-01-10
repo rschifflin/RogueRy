@@ -2,8 +2,6 @@ class CursesUIElement
   include HeirarchyMember
   include Movable
   include Sizable
-  include Formattable
-
   attr_reader :id, :tags
 
   def initialize ui_element
