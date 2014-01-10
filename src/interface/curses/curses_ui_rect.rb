@@ -5,6 +5,7 @@ class CursesUIRect < CursesUIElement
 
   def on_update ui_rect
     @char = ui_rect.char
+    self.resize(ui_rect.w, ui_rect.h)
   end
 
   def render output

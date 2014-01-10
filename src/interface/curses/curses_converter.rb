@@ -16,7 +16,7 @@ class CursesConverter
   end
 
   def create_rect_from(template)
-    CursesUIRect.new(template)
+    CursesUIRect.new(template).move(3,3)
   end
 
   def create_text_from(template)

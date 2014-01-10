@@ -13,11 +13,4 @@ class CursesSyncer
   def sync views
     view_keeper.views = views  
   end
-
-private
-  def map_views_by_id(views)
-    {}.tap do |hsh|
-      views.each { |view| hsh[view.id] = view }
-    end
-  end
 end
