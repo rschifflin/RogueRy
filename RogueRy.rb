@@ -1,14 +1,14 @@
 require File.dirname(__FILE__) + '/config/boot.rb'
 
 require 'engine/engine'
-require 'interface/curses/controller/curses_controller'
-require 'interface/curses/curses_converter'
-require 'interface/curses/curses_formatter'
-require 'interface/curses/curses_syncer'
-require 'interface/curses/renderer/curses_renderer'
-require 'interface/curses/curses_view_keeper'
-require 'wrappers/curses_io_wrapper'
-require 'wrappers/curses_interface_wrapper'
+require 'client/curses/curses_controller'
+require 'client/curses/curses_converter'
+require 'client/curses/curses_formatter'
+require 'client/curses/curses_syncer'
+require 'client/curses/curses_renderer'
+require 'client/curses/curses_view_keeper'
+require 'client/curses/curses_io_wrapper'
+require 'client/curses/curses_interface_wrapper'
 
 #Create our boundary wrappers
 def io_wrapper
