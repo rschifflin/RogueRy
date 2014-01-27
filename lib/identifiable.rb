@@ -1,6 +1,7 @@
-require 'SecureRandom'
 module Identifiable
+  @@id_count = 0
   def id
-    @id ||= SecureRandom.uuid     
+    @id ||= @@id_count
+    @@id_count += 1
   end
 end
