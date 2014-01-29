@@ -20,6 +20,35 @@ describe DoubleReferenceTable do
           expect(drt.insert(*indices, item)).to eq item
         end
       end
+
+      context "When given negative indices" do
+        let(:indices) { [-16,-31] }
+        it "inserts the item at those indices" do
+          expect { drt.insert(*indices, item) }.to change { drt.size }.by 1
+        end
+
+        it "hashes the item to the indices" do
+          drt.insert(*indices, item)
+          expect(drt.find(item)).to eq indices
+        end
+
+        it "returns the item on success" do
+          expect(drt.insert(*indices, item)).to eq item
+        end
+      end
+    end
+    
+    context "When inserting one item with positive indices, and another with negative indices" do
+      let(:positive_item) { double("Item") }
+      let(:negative_item) { double("Item") }
+      let(:positive_indices) { [34, 101] }
+      let(:negative_indices) { [-1, -451] }
+      it "can index and retrieve both" do
+        drt.insert(*positive_indices, positive_item)
+        drt.insert(*negative_indices, negative_item)
+        expect(drt.at(*positive_indices)).to include positive_item
+        expect(drt.at(*negative_indices)).to include negative_item
+      end
     end
 
     context "With an item already in the index" do

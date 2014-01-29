@@ -34,17 +34,30 @@ class DoubleReferenceTable
   end
 
   def spatial_index
-    return @spatial_index if @spatial_index
-    @spatial_index = Array.new
+    @spatial_index ||= SpatialIndex.new
+  end
 
-    def @spatial_index.[](index)
-      return self.at(index) if self.at(index)
-      lazy_array = []
-      def lazy_array.[](index)
-        self.at(index) ? self.at(index) : self[index] = []
+private
+  class SpatialIndex
+    attr_reader :base_array
+    attr_reader :origin
+
+    def initialize
+      @origin = [0,0]
+      
+      @base_array = NegativeAllowedArray.new
+      def @base_array.[](index) 
+        return self.at(index) if self.at(index)
+        lazy_array = NegativeAllowedArray.new
+        def lazy_array.[](index)
+          self.at(index) ? self.at(index) : self[index] = []
+        end
+        self[index] = lazy_array
       end
-      self[index] = lazy_array
     end
-    @spatial_index
+
+    def [](index)
+      base_array[index]
+    end
   end
 end
